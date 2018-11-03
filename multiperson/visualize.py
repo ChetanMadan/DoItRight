@@ -4,7 +4,7 @@ import numpy as np
 import scipy.spatial
 
 import matplotlib.pyplot as plt
-
+import cv2
 import munkres
 
 from util.visualize import check_point, _npcircle
@@ -142,6 +142,77 @@ class PersonDraw:
         self.prev_color_assignment = color_assignment
         return coor
 
+    def draw2(self, visim, dataset, person_conf, image):
+        minx = 2 * marker_size
+        coor=[]
+        miny = 2 * marker_size
+        maxx = visim.shape[1] - 2 * marker_size
+        maxy = visim.shape[0] - 2 * marker_size
+
+        num_people = person_conf.shape[0]
+        color_assignment = dict()
+
+        # MA: assign same color to matching body configurations
+        if self.prev_person_conf.shape[0] > 0 and person_conf.shape[0] > 0:
+            ref_points = get_ref_points(person_conf)
+            prev_ref_points = get_ref_points(self.prev_person_conf)
+
+            # MA: this munkres implementation assumes that num(rows) >= num(columns)
+            if person_conf.shape[0] <= self.prev_person_conf.shape[0]:
+                cost_matrix = scipy.spatial.distance.cdist(ref_points, prev_ref_points)
+            else:
+                cost_matrix = scipy.spatial.distance.cdist(prev_ref_points, ref_points)
+
+            assert (cost_matrix.shape[0] <= cost_matrix.shape[1])
+
+            conf_assign = self.mk.compute(cost_matrix)
+
+            if person_conf.shape[0] > self.prev_person_conf.shape[0]:
+                conf_assign = [(idx2, idx1) for idx1, idx2 in conf_assign]
+                cost_matrix = cost_matrix.T
+
+            for pidx1, pidx2 in conf_assign:
+                if cost_matrix[pidx1][pidx2] < min_match_dist:
+                    color_assignment[pidx1] = self.prev_color_assignment[pidx2]
+
+        print("#tracked objects:", len(color_assignment))
+
+        free_coloridx = sorted(list(set(range(len(self.track_colors))).difference(set(color_assignment.values()))),
+                               reverse=True)
+
+        for pidx in range(num_people):
+            # color_idx = pidx % len(self.track_colors)
+            if pidx in color_assignment:
+                color_idx = color_assignment[pidx]
+            else:
+                if len(free_coloridx) > 0:
+                    color_idx = free_coloridx[-1]
+                    free_coloridx = free_coloridx[:-1]
+                else:
+                    color_idx = np.random.randint(len(self.track_colors))
+
+                color_assignment[pidx] = color_idx
+
+            assert (color_idx < len(self.track_colors))
+
+            if np.sum(person_conf[pidx, :, 0] > 0) < draw_conf_min_count:
+                continue
+
+            for kidx1, kidx2 in dataset.get_pose_segments():
+                p1 = (int(math.floor(person_conf[pidx, kidx1, 0])), int(math.floor(person_conf[pidx, kidx1, 1])))
+                p2 = (int(math.floor(person_conf[pidx, kidx2, 0])), int(math.floor(person_conf[pidx, kidx2, 1])))
+                if check_point(p1[0], p1[1], minx, miny, maxx, maxy) and check_point(p2[0], p2[1], minx, miny, maxx,
+                                                                                     maxy):
+                    color = np.array(self.track_colors[color_idx][::-1], dtype=np.float64) / 255.0
+                    #plt.plot([p1[0], p2[0]], [p1[1], p2[1]], marker='o', linestyle='solid', linewidth=2.0, color=color)
+                    cv2.line(image, (p1[0], p1[1]), (p2[0], p2[1]), (0,255,0), 2)
+                    #print(p1, p2 )
+                    coor.append([p1,p2])
+
+
+        self.prev_person_conf = person_conf
+        self.prev_color_assignment = color_assignment
+        return coor
 
 
 keypoint_colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255), (255, 0, 255), (255, 255, 0),
