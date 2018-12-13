@@ -8,7 +8,6 @@ asn1crypto==0.24.0
 astor==0.7.1
 astroid==1.6.1
 astropy==2.0.3
-atari-py==0.1.1
 attrs==17.4.0
 Babel==2.5.3
 backports.shutil-get-terminal-size==1.0.0
@@ -28,11 +27,7 @@ click==6.7
 cloudpickle==0.5.2
 cntk==2.5.1
 colorama==0.3.9
-conda==4.5.11
-conda-build==3.4.1
-conda-verify==2.0.0
 contextlib2==0.5.5
-cryptography==2.1.4
 cycler==0.10.0
 Cython==0.27.3
 cytoolz==0.9.0
@@ -65,7 +60,6 @@ google==2.0.1
 greenlet==0.4.12
 grpcio==1.15.0
 gunicorn==19.9.0
-gym==0.10.5
 h5py==2.8.0
 heapdict==1.0.0
 html5lib==0.9999999
