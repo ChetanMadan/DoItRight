@@ -1,0 +1,10 @@
+name: doItRight
+dependencies:
+  - python=3.6
+  - pip:
+    - dash
+    - dash-renderer
+    - dash-core-components
+    - dash-html-components
+    - plotly
+    - gunicorn
