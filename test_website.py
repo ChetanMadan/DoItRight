@@ -1,16 +1,16 @@
 from flask import Flask
 import enter
-import finalmost
+import finalmost_nolag
 
 app = Flask(__name__)
 
 @app.route('/')
 def index ():
-    return enter
+    return finalmost_nolag.main()
 
 @app.route('/v')
 def index1 ():
-    return finalmost.main()
+    return finalmost_nolag.main()
 
 
 if __name__ == "__main__":
