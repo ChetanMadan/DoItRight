@@ -141,7 +141,6 @@ pyelftools==0.24
 pyflakes==1.6.0
 pyglet==1.2.4
 Pygments==2.2.0
-pygpu==0.7.6
 pylint==1.9.3
 PyNaCl==1.2.1
 pyodbc==4.0.22
