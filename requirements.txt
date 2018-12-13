@@ -154,7 +154,6 @@ pytest==3.3.2
 python-dateutil==2.6.1
 python-firebase==1.2
 pytz==2017.3
-PyWavelets==0.5.2
 PyYAML==3.12
 pyzmq==17.1.2
 QtAwesome==0.4.4
@@ -162,7 +161,6 @@ qtconsole==4.3.1
 QtPy==1.3.1
 requests==2.18.4
 rope==0.10.7
-ROPGadget==5.4
 ruamel-yaml==0.15.35
 scikit-image==0.13.1
 scikit-learn==0.20.0
@@ -193,11 +191,8 @@ tensorpack==0.8.9
 termcolor==1.1.0
 terminado==0.8.1
 testpath==0.3.1
-tf-pose==0.1.1
 tflearn==0.3.2
-Theano==1.0.2
 toolz==0.9.0
-torchvision==0.2.1
 tornado==4.5.3
 tox==3.1.2
 tqdm==4.24.0
