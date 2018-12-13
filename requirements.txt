@@ -130,8 +130,6 @@ ptyprocess==0.5.2
 pwntools==3.12.0
 py==1.5.2
 pyasn1==0.4.4
-PyAudio==0.2.11
-pycocotools==2.0
 pycodestyle==2.3.1
 pycosat==0.6.3
 pycparser==2.18
