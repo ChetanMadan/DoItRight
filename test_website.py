@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index ():
-    return finalmost_nolag.main()
+    return enter.main()
 
 @app.route('/v')
 def index1 ():
