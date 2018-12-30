@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 import time
 import math
 import imutils
@@ -28,7 +22,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tkinter import messagebox
 
-
+slopes=[]
 def vibrate(key):
     pass
 def compare_images(slope1, slope2, allowance):
@@ -63,7 +57,7 @@ def slope_calc(co1):
 
 
 
-def run_predict(frame):
+def run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi):
 
     # Load and setup CNN part detector
     tf.reset_default_graph()
@@ -78,62 +72,63 @@ def run_predict(frame):
     m=time.time()
     person_conf_multi = get_person_conf_multicut(sm, unLab, unary_array, pos_array)
     img = np.copy(image)
-    #coor = PersonDraw.draw()
     visim_multi = img.copy()
-    co1=draw_multi.draw2(visim_multi, dataset, person_conf_multi, image)
-    return co1
+    draw_multi.draw(visim_multi, dataset, person_conf_multi, image)
+    return pos_array.round().astype(int)
 
-start_time=time.time()
-cfg = load_config("demo/pose_cfg_multi.yaml")
-dataset=create_dataset(cfg)
-sm = SpatialModel(cfg)
-sm.load()
-tf.reset_default_graph()
-draw_multi = PersonDraw()
-sess, inputs, outputs = predict.setup_pose_prediction(cfg)
-fps_time=0
-# Read image from file
-slopes={}
-dir=os.listdir("stick")
-k=0
-cap=cv2.VideoCapture('exer.mp4')
-cap_user=cv2.VideoCapture(0)
-i=0
-while (True):
-    ret, orig_frame= cap.read()
-    ret2, orig_frame_user= cap_user.read()
-    if i%25 == 0:                   
-        
-        frame = cv2.resize(orig_frame, (0, 0), fx=0.50, fy=0.50)
-        #frame=orig_frame
-        user_frame=cv2.resize(orig_frame_user, (0, 0), fx=0.50, fy=0.50)
-        co1=run_predict(frame)
-        user_co1=run_predict(user_frame)
-        
-        
-        try:
-            slope_reqd=slope_calc(co1)
-            slope_user=slope_calc(user_co1)
-            compare_images(slope_reqd, slope_user)
-        except IndexError:
-            #if len(co1)!=len(user_co1):
-            #messagebox.showinfo("Title", "Please adjust camera to show your keypoints")
-            pass
-        cv2.putText(user_frame,
-                    "FPS: %f" % (1.0 / (time.time() - fps_time)),
-                    (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    (0, 255, 0), 2)
-        
-        cv2.imshow('user_frame', user_frame)
-        cv2.imshow('frame', frame)
-        fps_time=time.time()
-        #visualize.waitforbuttonpress()
-        if cv2.waitKey(10)==ord('q'):
-            break
-elapsed= time.time()-start_time
-#print("sse score : ", sse)
-cap.release()
-cap_user.release()
-cv2.destroyAllWindows()
-cap_user.release()
 
+def main(option):
+    option='exer.mp4'
+    start_time=time.time()
+    cfg = load_config("demo/pose_cfg_multi.yaml")
+    dataset=create_dataset(cfg)
+    sm = SpatialModel(cfg)
+    sm.load()
+    tf.reset_default_graph()
+    draw_multi = PersonDraw()
+    sess, inputs, outputs = predict.setup_pose_prediction(cfg)
+    fps_time=0
+    # Read image from file
+    slopes={}
+    dir=os.listdir("stick")
+    k=0
+    cap=cv2.VideoCapture(option)
+    cap_user=cv2.VideoCapture(0)
+    i=0
+    while (True):
+        ret, orig_frame= cap.read()
+        ret2, orig_frame_user= cap_user.read()
+        if i%25 == 0:                   
+            
+            frame = cv2.resize(orig_frame, (0, 0), fx=0.50, fy=0.50)
+            #frame=orig_frame
+            user_frame=cv2.resize(orig_frame_user, (0, 0), fx=0.50, fy=0.50)
+            co1=run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi)
+            user_co1=run_predict(user_frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi)
+            try:
+                slope_reqd=slope_calc(co1)
+                slope_user=slope_calc(user_co1)
+                compare_images(slope_reqd, slope_user, 0.1)
+            except IndexError:
+                #if len(co1)!=len(user_co1):
+                #messagebox.showinfo("Title", "Please adjust camera to show your keypoints")
+                pass
+            cv2.putText(user_frame,
+                        "FPS: %f" % (1.0 / (time.time() - fps_time)),
+                        (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0, 255, 0), 2)
+            
+            cv2.imshow('user_frame', user_frame)
+            cv2.imshow('frame', frame)
+            fps_time=time.time()
+            #visualize.waitforbuttonpress()
+            if cv2.waitKey(10)==ord('q'):
+                break
+    elapsed= time.time()-start_time
+    #print("sse score : ", sse)
+    cap.release()
+    cap_user.release()
+    cv2.destroyAllWindows()
+    cap_user.release()
+
+main("f")
