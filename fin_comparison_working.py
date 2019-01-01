@@ -14,7 +14,6 @@ from util import visualize
 import cv2
 from dataset.pose_dataset import data_to_input
 
-
 from multiperson.detections import extract_detections
 from multiperson.predict import SpatialModel, eval_graph, get_person_conf_multicut
 from multiperson.visualize import PersonDraw, visualize_detections
@@ -78,7 +77,6 @@ def run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi):
 
 
 def main(option):
-    option='exer.mp4'
     start_time=time.time()
     cfg = load_config("demo/pose_cfg_multi.yaml")
     dataset=create_dataset(cfg)
@@ -130,5 +128,3 @@ def main(option):
     cap_user.release()
     cv2.destroyAllWindows()
     cap_user.release()
-
-main("f")

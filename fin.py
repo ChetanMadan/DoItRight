@@ -1,14 +1,9 @@
 
-# coding: utf-8
-
-# In[9]:
-
 
 import os
 import sys
 import numpy as np
 import cv2
-#sys.path.append(os.path.dirname(__file__) + "/../")
 
 from scipy.misc import imread, imsave
 from skimage.measure import structural_similarity as ssim
@@ -24,10 +19,6 @@ from multiperson.predict import SpatialModel, eval_graph, get_person_conf_multic
 from multiperson.visualize import PersonDraw, visualize_detections
 import matplotlib.pyplot as plt
 import tensorflow as tf
-
-
-# In[10]:
-
 
 def mse(imageA,imageB):
     err = np.sum((imageA.astype("float")-imageB.astype("float"))**2)
@@ -49,10 +40,6 @@ def compare_images(imageA, imageB, title):
     plt.show()
     
     return(s,m)
-
-
-# In[11]:
-
 
 
 tf.reset_default_graph()

@@ -1,7 +1,8 @@
 import webbrowser
 import os
 import re
-
+WORKING_DIR = '/home/dexter/Desktop/projects/ml/DoItRight'
+# Styles and scripting for the page
 main_page_head = '''
 <head>
     <meta charset="utf-8">
@@ -138,7 +139,7 @@ def create_movie_tiles_content(movies):
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            trailer_youtube_id=movie.trailer_youtube_url
         )
     return content
 
@@ -155,4 +156,4 @@ def open_movies_page(movies):
 
   # open the output file in the browser
   url = os.path.abspath(output_file.name)
-  webbrowser.open('file://' + url, new=2)
+  webbrowser.open('file://' + url, new=2) # open in a new tab, if possible

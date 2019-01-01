@@ -59,7 +59,7 @@
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
-            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            var sourceUrl = trailerYouTubeId;
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
@@ -97,40 +97,34 @@
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="http://127.0.0.1:5000/">Try It Now</a>
+            <a class="navbar-brand" href="http://127.0.0.1:5000/v">Try It Now</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="KYz2wyBy3kc" data-toggle="modal" data-target="#trailer">
-    <img src="https://www.mumslounge.com.au/wp-content/uploads/2012/07/push%20ups%20exercise.jpg" width="280" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon1.gif" data-toggle="modal" data-target="#trailer">
+    <img src="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon1.jpg" width="280" height="342">
     <h2>Push Up</h2>
 </div>
 
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="5PSNL1qE6VY" data-toggle="modal" data-target="#trailer">
-    <img src="https://life-cdn.global.ssl.fastly.net/life/wp-content/uploads/2016/05/Are-You-Planking-All-Wrong_StraightBack.jpg" width="280" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon2.gif" data-toggle="modal" data-target="#trailer">
+    <img src="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon2.png" width="280" height="342">
     <h2>Plank</h2>
 </div>
 
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="xA6cOSEZhzM" data-toggle="modal" data-target="#trailer">
-    <img src="https://health.clevelandclinic.org/wp-content/uploads/sites/3/2016/04/SitUp.jpg" width="280" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon4.gif" data-toggle="modal" data-target="#trailer">
+    <img src="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon3_new.jpg" width="280" height="342">
     <h2>Crunches</h2>
 </div>
 
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="3PsUJFEBC74" data-toggle="modal" data-target="#trailer">
-    <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/wm-0807-toe-touch-1441032989.jpg" width="280" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon3.gif" data-toggle="modal" data-target="#trailer">
+    <img src="file:///home/dexter/Desktop/projects/ml/DoItRight/msgifs/icon4_new.jpg" width="280" height="342">
     <h2>Toe Touch</h2>
-</div>
-
-
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="PbdM1db3JbY" data-toggle="modal" data-target="#trailer">
-    <img src="http://risetoit.co.za/wp-content/uploads/2013/04/Burpees.jpg" width="280" height="342">
-    <h2>Burpees</h2>
 </div>
 
 

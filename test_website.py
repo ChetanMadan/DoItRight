@@ -1,7 +1,6 @@
 from flask import Flask
 import enter
-import finalmost_nolag
-
+import fin_comparison_working
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,7 +9,7 @@ def index ():
 
 @app.route('/v')
 def index1 ():
-    return finalmost_nolag.main()
+    return fin_comparison_working.main('exer.mp4')
 
 
 if __name__ == "__main__":
