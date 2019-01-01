@@ -1,18 +1,20 @@
 import webbrowser
 import os
 import re
+import test_website
 WORKING_DIR = '/home/dexter/Desktop/projects/ml/DoItRight'
 # Styles and scripting for the page
 main_page_head = '''
 <head>
     <meta charset="utf-8">
-    <title>Fresh Tomatoes!</title>
+    <title>Do It Right!</title>
 
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
@@ -65,12 +67,14 @@ main_page_head = '''
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = trailerYouTubeId;
+            var lastClicked=sourceUrl
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
               'src': sourceUrl,
               'frameborder': 0
             }));
+            console.log(lastClicked)
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -78,9 +82,11 @@ main_page_head = '''
             $(this).next("div").show("fast", showNext);
           });
         });
+        
     </script>
 </head>
 '''
+
 
 # The main page layout and title bar
 main_page_content = '''
