@@ -57,6 +57,7 @@ main_page_head = '''
         }
     </style>
     <script type="text/javascript" charset="utf-8">
+    
         // Pause the video when the modal is closed
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
@@ -67,7 +68,7 @@ main_page_head = '''
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = trailerYouTubeId;
-            var lastClicked=sourceUrl
+            var lastClicked=sourceUrl;
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
@@ -131,7 +132,6 @@ movie_tile_content = '''
 </div>
 
 '''
-
 def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''

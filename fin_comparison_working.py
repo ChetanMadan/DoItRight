@@ -58,7 +58,6 @@ def slope_calc(co1):
 
 def run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi):
 
-    # Load and setup CNN part detector
     tf.reset_default_graph()
     image= frame
     image_batch = data_to_input(frame)
@@ -77,7 +76,6 @@ def run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi):
 
 
 def main(option):
-    start_time=time.time()
     cfg = load_config("demo/pose_cfg_multi.yaml")
     dataset=create_dataset(cfg)
     sm = SpatialModel(cfg)
@@ -87,9 +85,7 @@ def main(option):
     sess, inputs, outputs = predict.setup_pose_prediction(cfg)
     fps_time=0
     # Read image from file
-    slopes={}
-    dir=os.listdir("stick")
-    k=0
+    
     cap=cv2.VideoCapture(option)
     cap_user=cv2.VideoCapture(0)
     i=0
@@ -99,7 +95,6 @@ def main(option):
         if i%25 == 0:                   
             
             frame = cv2.resize(orig_frame, (0, 0), fx=0.50, fy=0.50)
-            #frame=orig_frame
             user_frame=cv2.resize(orig_frame_user, (0, 0), fx=0.50, fy=0.50)
             co1=run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi)
             user_co1=run_predict(user_frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi)
@@ -122,8 +117,6 @@ def main(option):
             #visualize.waitforbuttonpress()
             if cv2.waitKey(10)==ord('q'):
                 break
-    elapsed= time.time()-start_time
-    #print("sse score : ", sse)
     cap.release()
     cap_user.release()
     cv2.destroyAllWindows()
