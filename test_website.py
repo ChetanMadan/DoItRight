@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index ():
-    return enter.main()
+    return enter
 
 @app.route('/v')
 def index1 ():
