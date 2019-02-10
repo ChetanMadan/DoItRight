@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Excercises Page</h1> 
+
+
+    <p>this will have all the options vale button so i am making 6 buttons here!
+        <button id="1" title="e1" onclick="getid(this.id)">e1</button>
+        <button id="2" title="e2" onclick="getid(this.id)">e2</button>
+        <button id="3" title="e3" onclick="getid(this.id)">e3</button>
+        <button id="4" title="e4" onclick="getid(this.id)">e4</button>
+        <button id="5" title="e5" onclick="getid(this.id)">e5</button>
+        <button id="6" title="e6" onclick="getid(this.id)">e6</button>
+    </p>
+    <script type="text/javascript"> 
+    function getid(id){
+            console.log(id);
+            return id;
+    }
+     
+    </Script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>MAIN PAGE</h1> 
+
+
+    <p>this will have all the options vale button so i am making 6 buttons here!
+        <button id="1" title="Nutrition Plans" onclick="getid(this.id)">Nutrition Plans</button>
+        <button id="2" title="Excercise Plans" onclick="getid(this.id)">Excercise Plans</button>
+        <button id="3" title="BMI" onclick="getid(this.id)">BMI</button>
+        <button id="4" title="Alert" onclick="getid(this.id)">Alert - Make this a danger button using bootstrap</button>
+        <button id="5" title="Calorie count" onclick="getid(this.id)">Calorie Count</button>
+        <button id="6" title="Yoga and Meditation" onclick="getid(this.id)">Yoga and Meditation</button>
+    </p>
+    <script type="text/javascript"> 
+    function getid(id){
+            console.log(id);
+            return id;
+    }
+     
+    </Script>
+
+{% endblock %}
