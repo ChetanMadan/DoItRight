@@ -1,7 +1,7 @@
 from flask import Flask
 import enter
 import fin_comparison_working
-
+ 
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,5 +22,5 @@ def index1 (key):
     return fin_comparison_working.main('msgifs/'+to_dict[key])
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+if __name__ == ("__main__"):
+    app.run(debug=True,host='0.0.0.0')
