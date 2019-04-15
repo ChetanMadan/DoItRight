@@ -7,7 +7,6 @@ import numpy as np
 import cv2
 from scipy.misc import imread, imsave
 from skimage.measure import compare_ssim as ssim
-
 from config import load_config
 from dataset.factory import create as create_dataset
 from nnet import predict
@@ -24,14 +23,16 @@ from tkinter import messagebox
 
 slopes=[]
 def vibrate(key):
-    pass
+    os.system('play  --null --channels 1 synth %s sine %f' % (1, 500))
+
 def compare_images(slope1, slope2, allowance):
     for key in slope1:
         if abs(slope1[key]-slope2[key]) > allowance:
             vibrate(key)
             print("error at : ", key)
-            
-            
+            return (key,slope1[key]-slope2[key])
+
+
 def slope_calc(co1):
     body_dict={'nose_right': co1[0],
                'nose_left': co1[1],
@@ -62,7 +63,7 @@ def run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi):
     tf.reset_default_graph()
     image= frame
     image_batch = data_to_input(frame)
-    
+
     # Compute prediction_n with the CNN
     outputs_np = sess.run(outputs, feed_dict={inputs: image_batch})
     scmap, locref, pairwise_diff = predict.extract_cnn_output(outputs_np, cfg, dataset.pairwise_stats)
@@ -86,15 +87,14 @@ def main(option):
     sess, inputs, outputs = predict.setup_pose_prediction(cfg)
     fps_time=0
     # Read image from file
-    
-    cap=cv2.VideoCapture(option)
-    cap_user=cv2.VideoCapture(0)
+    cap=cv2.VideoCapture('msgifs/icon4.gif')
+    cap_user=cv2.VideoCapture('user.mp4')
     i=0
     while (True):
         ret, orig_frame= cap.read()
         ret2, orig_frame_user= cap_user.read()
-        if i%25 == 0:                   
-            
+        if i%25 == 0:
+
             frame = cv2.resize(orig_frame, (0, 0), fx=0.50, fy=0.50)
             user_frame=cv2.resize(orig_frame_user, (0, 0), fx=0.50, fy=0.50)
             co1=run_predict(frame, sess, inputs, outputs, cfg, dataset, sm, draw_multi)
@@ -107,11 +107,13 @@ def main(option):
                 #if len(co1)!=len(user_co1):
                 #messagebox.showinfo("Title", "Please adjust camera to show your keypoints")
                 pass
+            #frame = cv2.resize(frame, (0, 0), fx=2.0, fy=2.0)
+            #user_frame = cv2.resize(user_frame, (0, 0), fx=2.0, fy=2.0)
             cv2.putText(user_frame,
                         "FPS: %f" % (1.0 / (time.time() - fps_time)),
                         (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                         (0, 255, 0), 2)
-            
+
             cv2.imshow('user_frame', user_frame)
             cv2.imshow('frame', frame)
             fps_time=time.time()

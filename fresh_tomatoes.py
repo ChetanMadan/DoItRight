@@ -2,7 +2,7 @@ import webbrowser
 import os
 import re
 import test_website
-WORKING_DIR = '/home/dexter/Desktop/projects/ml/DoItRight'
+WORKING_DIR = '/home/dexter/Desktop/DoIt'
 # Styles and scripting for the page
 main_page_head = '''
 <head>
@@ -14,7 +14,7 @@ main_page_head = '''
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    
+
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
@@ -57,7 +57,7 @@ main_page_head = '''
         }
     </style>
     <script type="text/javascript" charset="utf-8">
-    
+
         // Pause the video when the modal is closed
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
@@ -83,11 +83,10 @@ main_page_head = '''
             $(this).next("div").show("fast", showNext);
           });
         });
-        
+
     </script>
 </head>
 '''
-
 
 # The main page layout and title bar
 main_page_content = '''
@@ -148,7 +147,6 @@ def create_movie_tiles_content(movies):
 def open_movies_page(movies):
   # Create or overwrite the output file
   output_file = open('fresh_tomatoes.html', 'w')
-
   # Replace the placeholder for the movie tiles with the actual dynamically generated content
   rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
 
