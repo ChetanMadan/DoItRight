@@ -1,7 +1,7 @@
 import math
 
 import numpy as np
-from scipy.misc import imresize
+from cv2 import resize as imresize
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt

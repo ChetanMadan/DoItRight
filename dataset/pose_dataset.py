@@ -7,7 +7,8 @@ from numpy import array as arr
 from numpy import concatenate as cat
 
 import scipy.io as sio
-from scipy.misc import imread, imresize
+from matplotlib.pyplot import imread
+from cv2 import resize
 
 
 class Batch(Enum):

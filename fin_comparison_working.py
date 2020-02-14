@@ -5,7 +5,7 @@ import os
 import sys
 import numpy as np
 import cv2
-from scipy.misc import imread, imsave
+from cv2 import imread, imwrite as imsave
 from skimage.measure import compare_ssim as ssim
 from config import load_config
 from dataset.factory import create as create_dataset

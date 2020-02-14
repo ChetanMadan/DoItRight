@@ -5,7 +5,7 @@ import os
 import sys
 import numpy as np
 import cv2
-from scipy.misc import imread, imsave
+from matplotlib.pyplot import imread, imsave
 from skimage.measure import compare_ssim as ssim
 from config import load_config
 from dataset.factory import create as create_dataset
@@ -23,7 +23,6 @@ from tkinter import messagebox
 
 def vibrate(key):
     os.system('play  --null --channels 1 synth %s sine %f' % (1, 500))
-
 
 def compare_images(slope1, slope2, allowance):
     for key in slope1:
@@ -135,8 +134,8 @@ def main(option):
     # Read image from file
     slopes={}
     k=0
-    cap=cv2.VideoCapture(option)
-    cap_user=cv2.VideoCapture(0)
+    cap=cv2.VideoCapture("user.mp4")
+    cap_user=cv2.VideoCapture('user.mp4')
     i=0
     while (True):
         ret, orig_frame= cap.read()
@@ -173,3 +172,6 @@ def main(option):
     cap.release()
     cap_user.release()
     cv2.destroyAllWindows()
+
+if __name__=="__main__":
+    main("some")
