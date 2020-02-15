@@ -108,14 +108,12 @@ class PoseNet:
             return tf.losses.sigmoid_cross_entropy(batch[Batch.part_score_targets],
                                                    heads[pred_layer],
                                                    part_score_weights)
-
         loss = {}
         loss['part_loss'] = add_part_loss('part_pred')
         total_loss = loss['part_loss']
         if intermediate:
             loss['part_loss_interm'] = add_part_loss('part_pred_interm')
             total_loss = total_loss + loss['part_loss_interm']
-
         if locref:
             locref_pred = heads['locref']
             locref_targets = batch[Batch.locref_targets]

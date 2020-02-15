@@ -13,24 +13,53 @@ from nnet import predict
 from util import visualize
 import cv2
 from dataset.pose_dataset import data_to_input
-
+import pickle
 from multiperson.detections import extract_detections
 from multiperson.predict import SpatialModel, eval_graph, get_person_conf_multicut
 from multiperson.visualize import PersonDraw, visualize_detections
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tkinter import messagebox
+import socket
 
+
+retu = False
 def vibrate(key):
     os.system('play  --null --channels 1 synth %s sine %f' % (1, 500))
+    if key is not None:
+        re = send(key)
+
+    else:
+        re = send("Perfect!!")
+    re.close()
+
+def conn_ini():
+    host = '192.168.43.31'  # as both code is running on same pc
+    port = 8082  # socket server port number
+    retu = True
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # instantiate
+    s.connect((host, port))  # connect to the server
+    return s
+def send(message):
+
+    if not retu:
+        sender = conn_ini()
+
+    mess = [message, time.time()]
+    sender.send(pickle.dumps(mess))
+    return sender
+
+
 
 def compare_images(slope1, slope2, allowance):
+    qw = None
     for key in slope1:
         print(key,slope1[key]-slope2[key])
         if abs(slope1[key]-slope2[key]) > allowance:
-            vibrate(key)
+            qw = key
             print("error at : ", key)
-            return (key,slope1[key]-slope2[key])
+        vibrate(key)
+        return (key,slope1[key]-slope2[key])
 
 def slope_calc(co1, co2):
     body_dict={'right_upper_arm':co1[4],
@@ -136,6 +165,8 @@ def main(option):
     k=0
     cap=cv2.VideoCapture("http://192.168.43.31:8081")
     cap_user=cv2.VideoCapture('/dev/video0')
+    cap = cap_user
+
     i=0
     while (True):
         ret, orig_frame= cap.read()
@@ -149,13 +180,15 @@ def main(option):
             user_co1=run_predict(user_frame,sess, outputs, inputs,cfg,dataset,sm,draw_multi)
             print("USER_CO1            ", user_co1)
             print("CO1            ", co1)
+            k = None
             try:
-
                 slope_reqd, slope_user=slope_calc(co1, user_co1)
-                compare_images(slope_reqd, slope_user, 0.75)
+                k,s = compare_images(slope_reqd, slope_user, 0.75)
             except IndexError:
                 #if len(co1)!=len(user_co1):
+                print("Except condition")
                 pass
+            vibrate(k)
             frame = cv2.resize(frame, (0, 0), fx=2.0, fy=2.0)
             user_frame = cv2.resize(user_frame, (0, 0), fx=2.0, fy=2.0)
             cv2.putText(user_frame,
