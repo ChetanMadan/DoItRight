@@ -22,7 +22,7 @@ pycparser==2.18
 PyJWT==1.5.2
 python-dateutil==2.6.1
 python-editor==1.0.3
-opencv-python==3.4.2.17
+opencv-python==4.2.0.32
 six==1.10.0
 scikit-image==0.13.1
 scikit-learn==0.20.0
